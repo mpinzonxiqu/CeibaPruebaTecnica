@@ -1,0 +1,88 @@
+✅ Servicios REST requeridos
+1. Crear préstamo
+Método HTTP: POST
+
+Path: /prestamo
+
+Responsabilidades:
+
+Crear un préstamo con los campos:
+
+isbn (String)
+
+identificacionUsuario (String)
+
+tipoUsuario (Integer: 1, 2 o 3)
+
+Validaciones clave:
+
+Si el tipoUsuario no es 1, 2 o 3, retornar:
+
+json
+Copiar
+Editar
+{
+  "mensaje": "Tipo de usuario no permitido en la biblioteca"
+}
+Si el usuario es tipo invitado (3) y ya tiene un préstamo registrado, retornar:
+
+json
+Copiar
+Editar
+{
+  "mensaje": "El usuario con identificación Xxxxx ya tiene un libro prestado por lo cual no se le puede realizar otro préstamo"
+}
+Calcular la fechaMaximaDevolucion según:
+
+Afiliado (1): +10 días hábiles
+
+Empleado (2): +8 días hábiles
+
+Invitado (3): +7 días hábiles
+
+(sin contar sábados ni domingos)
+
+Retornar:
+
+json
+Copiar
+Editar
+{
+  "id": 1,
+  "fechaMaximaDevolucion": "dd/MM/yyyy"
+}
+2. Consultar préstamo por ID
+Método HTTP: GET
+
+Path: /prestamo/{id-prestamo}
+
+Responsabilidades:
+
+Retornar la información del préstamo almacenado con ese ID:
+
+json
+Copiar
+Editar
+{
+  "id": 1,
+  "isbn": "DASD154212",
+  "identificacionUsuario": "154515485",
+  "tipoUsuario": 1,
+  "fechaMaximaDevolucion": "15/02/2021"
+}
+Si el préstamo no existe o hay un error, retornar:
+
+json
+Copiar
+Editar
+{
+  "mensaje": "Mensaje explicativo"
+}
+📌 Conclusión
+🔧 Servicios obligatorios para cumplir la prueba:
+
+POST /prestamo – Crear préstamo con reglas de negocio.
+
+GET /prestamo/{id} – Consultar préstamo por su ID.
+
+Estos dos servicios cubren todos los requisitos funcionales especificados. Todo lo demás (modelo, repositorio, servicio, pruebas, excepciones, fechas hábiles, etc.) debe implementarse como soporte para estos endpoints.
